@@ -1,11 +1,9 @@
-# Built code
-dist
-
-# Libs
+# package directories
 node_modules
+jspm_packages
 
-# Environmental variables
-.env
+# Serverless directories
+.serverless
 
-# Coverage files
-coverage
+# esbuild directories
+.esbuild
