@@ -1,5 +1,7 @@
 import { AwsAlexaEventToken } from "@serverless/typescript"
 
+import { SkillName } from "@/Protocols/SkillProtocol"
+
 export type HandlerFnCallbackResponse = {
 	version: string
 	response: {
@@ -18,7 +20,7 @@ export type ExportedHandler = {
 }
 
 export type GetHandlerConfigInput = {
-	skillName: string
+	skillName: SkillName
 	skillId: string
 }
 
@@ -32,4 +34,25 @@ export type HandlerFnConfig = {
 			}
 		}>
 	}
+}
+
+export type HandlerResponse = {
+	speak (text: string): HandlerFnCallbackResponse
+}
+
+export type HandlerProps = {
+	response: HandlerResponse
+}
+
+export type HandlerAction = (props: HandlerProps) => Promise<HandlerFnCallbackResponse>
+
+export interface Handler {
+	onExecution: HandlerAction
+	onLaunch: HandlerAction
+	onHelp: HandlerAction
+	onCancelAndStop: HandlerAction
+	onFallback: HandlerAction
+	onSessionEnded: HandlerAction
+	onIntentReflector: HandlerAction
+	onError: HandlerAction
 }

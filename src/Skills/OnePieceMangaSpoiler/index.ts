@@ -1,20 +1,39 @@
-import { HandlerFn } from "@/Protocols/HandlerProtocol"
+import { Handler, HandlerProps, HandlerFnCallbackResponse } from "@/Protocols/HandlerProtocol"
 
-import HandlerUtil from "@/Utils/HandlerUtil"
+import HandlerModule from "@/Modules/HandlerModule"
 
-const handlerFn: HandlerFn = (event, context, callback) => {
-  console.log(event, context, callback)
+class OnePieceMangaSpoilerHandler implements Handler {
+  async onExecution (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
+    return props.response.speak("Working as expected!")
+  }
 
-  return callback(null, {
-    version: "1.0",
-    response: {
-      outputSpeech: {
-        type: "PlainText",
-        text: "Working as expected!"
-      },
-      shouldEndSession: false
-    }
-  })
+	async onLaunch (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
+    return props.response.speak("Launched!")
+  }
+
+	async onHelp (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
+    return props.response.speak("Need help?")
+  }
+
+	async onCancelAndStop (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
+    return props.response.speak("Cancel and Stop!")
+  }
+
+	async onFallback (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
+    return props.response.speak("Fallbacked!")
+  }
+
+	async onSessionEnded (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
+    return props.response.speak("Ended session!")
+  }
+
+	async onIntentReflector (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
+    return props.response.speak("Reflected intent!")
+  }
+
+	async onError (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
+    return props.response.speak("Failed!")
+  }
 }
 
-export default HandlerUtil.exportHandler(handlerFn)
+export default HandlerModule.export("OnePieceMangaSpoiler", new OnePieceMangaSpoilerHandler())

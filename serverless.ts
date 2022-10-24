@@ -7,7 +7,8 @@ const serverlessConfiguration: AWS = {
   frameworkVersion: "3",
   plugins: [
     "serverless-esbuild",
-    "serverless-offline"
+    "serverless-offline",
+    "serverless-alexa-skills"
   ],
   provider: {
     name: "aws",

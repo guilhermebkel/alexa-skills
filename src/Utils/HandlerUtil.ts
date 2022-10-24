@@ -1,19 +1,11 @@
 import * as path from "path"
 
 import {
-	HandlerFn,
-	ExportedHandler,
 	HandlerFnConfig,
 	GetHandlerConfigInput
 } from "@/Protocols/HandlerProtocol"
 
 class HandlerUtil {
-	exportHandler (handlerFn: HandlerFn): ExportedHandler {
-		return {
-			main: handlerFn
-		}
-	}
-
 	getHandlerFunctionConfig (input: GetHandlerConfigInput): HandlerFnConfig {
 		return {
 			[input.skillName]: {
