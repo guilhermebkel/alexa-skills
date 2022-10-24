@@ -2,13 +2,13 @@ import { AwsAlexaEventToken } from "@serverless/typescript"
 
 export type HandlerFnCallbackResponse = {
 	version: string
-    response: {
-      outputSpeech: {
-        type: "PlainText"
-        text: string
-      }
-      shouldEndSession: boolean
-    }
+	response: {
+		outputSpeech: {
+			type: "PlainText"
+			text: string
+		}
+		shouldEndSession: boolean
+	}
 }
 
 export type HandlerFn = (event: unknown, context: unknown, callback: (error: Error | null, response: HandlerFnCallbackResponse) => void) => void
