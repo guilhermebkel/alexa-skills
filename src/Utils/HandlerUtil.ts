@@ -23,9 +23,9 @@ class HandlerUtil {
 						alexaSkill: {
 							appId: input.skillId,
 							enabled: true
-						},
-					},
-				],
+						}
+					}
+				]
 			}
 		}
 	}

@@ -14,12 +14,12 @@ const serverlessConfiguration: AWS = {
     runtime: "nodejs14.x",
     apiGateway: {
       minimumCompressionSize: 1024,
-      shouldStartNameWithService: true,
+      shouldStartNameWithService: true
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
-      NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
-    },
+      NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
+    }
   },
   functions: {
     ...HandlerUtil.getHandlerFunctionConfig({
@@ -39,9 +39,9 @@ const serverlessConfiguration: AWS = {
       target: "node14",
       define: { "require.resolve": undefined },
       platform: "node",
-      concurrency: 10,
-    },
-  },
-};
+      concurrency: 10
+    }
+  }
+}
 
-module.exports = serverlessConfiguration;
+module.exports = serverlessConfiguration
