@@ -3,11 +3,11 @@ import {
 	ExportedHandler,
 	Handler,
 	HandlerAction,
-	HandlerProps,
-	HandlerFnCallbackResponse
+	HandlerProps
 } from "@/Protocols/HandlerProtocol"
 import { SkillName } from "@/Protocols/SkillProtocol"
 import { ActionType } from "@/Protocols/RequestProtocol"
+import { Response } from "@/Protocols/ResponseProtocol"
 
 import RequestUtil from "@/Utils/RequestUtil"
 
@@ -38,26 +38,52 @@ class HandlerModule {
 			const action = actionMap[actionType]
 			const handlerProps = this.getHandlerProps()
 
-			const response: HandlerFnCallbackResponse = await action.call(handler, handlerProps)
+			const response: Response = await action.call(handler, handlerProps)
 			callback(null, response)
 		}
 	}
 
 	private getHandlerProps (): HandlerProps {
-		return {
+		const responseObject: Response = {
+			version: "1.0",
 			response: {
-				speak: (text: string) => ({
-					version: "1.0",
-					response: {
+				shouldEndSession: true
+			}
+		}
+
+		const handlerProps: HandlerProps = {
+			response: {
+				speak: (text: string) => {
+					responseObject.response.outputSpeech = {
+						type: "PlainText",
+						text
+					}
+
+					return handlerProps.response
+				},
+				reprompt: (text: string) => {
+					responseObject.response.reprompt = {
 						outputSpeech: {
 							type: "PlainText",
 							text
-						},
-						shouldEndSession: false
+						}
 					}
-				})
+
+					return handlerProps.response
+				},
+				send: () => responseObject
+			},
+			session: {
+				persist: (data: Record<string, unknown>) => {
+					responseObject.sessionAttributes = {
+						...responseObject.sessionAttributes,
+						...data
+					}
+				}
 			}
 		}
+
+		return handlerProps
 	}
 }
 

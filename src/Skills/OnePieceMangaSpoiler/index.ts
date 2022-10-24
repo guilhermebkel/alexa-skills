@@ -1,38 +1,39 @@
-import { Handler, HandlerProps, HandlerFnCallbackResponse } from "@/Protocols/HandlerProtocol"
+import { Handler, HandlerProps } from "@/Protocols/HandlerProtocol"
+import { Response } from "@/Protocols/ResponseProtocol"
 
 import HandlerModule from "@/Modules/HandlerModule"
 
 class OnePieceMangaSpoilerHandler implements Handler {
-  async onExecution (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
-    return props.response.speak("Working as expected!")
+  async onExecution ({ response }: HandlerProps): Promise<Response> {
+    return response.speak("Working as expected!").send()
   }
 
-	async onLaunch (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
-    return props.response.speak("Launched!")
+	async onLaunch ({ response }: HandlerProps): Promise<Response> {
+    return response.speak("Launched!").send()
   }
 
-	async onHelp (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
-    return props.response.speak("Need help?")
+	async onHelp ({ response }: HandlerProps): Promise<Response> {
+    return response.speak("Need help?").send()
   }
 
-	async onCancelAndStop (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
-    return props.response.speak("Cancel and Stop!")
+	async onCancelAndStop ({ response }: HandlerProps): Promise<Response> {
+    return response.speak("Cancel and Stop!").send()
   }
 
-	async onFallback (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
-    return props.response.speak("Fallbacked!")
+	async onFallback ({ response }: HandlerProps): Promise<Response> {
+    return response.speak("Fallbacked!").send()
   }
 
-	async onSessionEnded (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
-    return props.response.speak("Ended session!")
+	async onSessionEnded ({ response }: HandlerProps): Promise<Response> {
+    return response.speak("Ended session!").send()
   }
 
-	async onIntentReflector (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
-    return props.response.speak("Reflected intent!")
+	async onIntentReflector ({ response }: HandlerProps): Promise<Response> {
+    return response.speak("Reflected intent!").send()
   }
 
-	async onError (props: HandlerProps): Promise<HandlerFnCallbackResponse> {
-    return props.response.speak("Failed!")
+	async onError ({ response }: HandlerProps): Promise<Response> {
+    return response.speak("Failed!").send()
   }
 }
 
