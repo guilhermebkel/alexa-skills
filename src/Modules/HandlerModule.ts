@@ -1,9 +1,4 @@
-import {
-	HandlerFn,
-	Handler,
-	HandlerAction,
-	HandlerProps
-} from "@/Protocols/HandlerProtocol"
+import { HandlerFn, Handler, HandlerAction, HandlerProps } from "@/Protocols/HandlerProtocol"
 import { ActionType } from "@/Protocols/RequestProtocol"
 import { Response } from "@/Protocols/ResponseProtocol"
 

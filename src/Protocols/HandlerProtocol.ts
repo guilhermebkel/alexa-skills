@@ -3,7 +3,7 @@ import { AwsAlexaEventToken } from "@serverless/typescript"
 import { SkillName } from "@/Protocols/SkillProtocol"
 import { Response } from "@/Protocols/ResponseProtocol"
 
-export type HandlerFn = (event: unknown, context: unknown, callback: (error: Error | null, response: Response | null) => void) => void
+export type HandlerFn = (event: unknown, context: unknown, callback: (error: Error | null, response: Response | null) => void) => Promise<void>
 
 export type GetHandlerConfigInput = {
 	skillName: SkillName
@@ -23,12 +23,12 @@ export type HandlerFnConfig = {
 }
 
 export type HandlerResponse = {
-	speak (text: string): HandlerResponse
+	speak: (text: string) => HandlerResponse
 	/**
 	 * Add a reprompt if you want to keep the session open for the user to respond.
 	 */
-	reprompt (text: string): HandlerResponse
-	send (): Response
+	reprompt: (text: string) => HandlerResponse
+	send: () => Response
 }
 
 export type HandlerSession = {
