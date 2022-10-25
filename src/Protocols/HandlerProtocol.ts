@@ -5,10 +5,6 @@ import { Response } from "@/Protocols/ResponseProtocol"
 
 export type HandlerFn = (event: unknown, context: unknown, callback: (error: Error | null, response: Response) => void) => void
 
-export type ExportedHandler = {
-	main: HandlerFn
-}
-
 export type GetHandlerConfigInput = {
 	skillName: SkillName
 	skillId: string

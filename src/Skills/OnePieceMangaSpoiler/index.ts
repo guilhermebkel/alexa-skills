@@ -37,4 +37,4 @@ class OnePieceMangaSpoilerHandler implements Handler {
   }
 }
 
-export default HandlerModule.export("OnePieceMangaSpoiler", new OnePieceMangaSpoilerHandler())
+export const main = HandlerModule.adapt("OnePieceMangaSpoiler", new OnePieceMangaSpoilerHandler())

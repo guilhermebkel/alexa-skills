@@ -1,5 +1,3 @@
-import * as path from "path"
-
 import {
 	HandlerFnConfig,
 	GetHandlerConfigInput
@@ -23,7 +21,7 @@ class HandlerUtil {
 	}
 
 	private buildHandlerPath (skillName: string): string {
-		return path.resolve("..", "Skills", skillName, "index.main")
+		return `src/Skills/${skillName}/index.main`
 	}
 }
 

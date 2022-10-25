@@ -1,6 +1,5 @@
 import {
 	HandlerFn,
-	ExportedHandler,
 	Handler,
 	HandlerAction,
 	HandlerProps
@@ -12,15 +11,7 @@ import { Response } from "@/Protocols/ResponseProtocol"
 import RequestUtil from "@/Utils/RequestUtil"
 
 class HandlerModule {
-	export (skillName: SkillName, handler: Handler): ExportedHandler {
-		const handlerFn = this.adapt(skillName, handler)
-
-		return {
-			main: handlerFn
-		}
-	}
-
-	private adapt (skillName: SkillName, handler: Handler): HandlerFn {
+	adapt (skillName: SkillName, handler: Handler): HandlerFn {
 		return async (event, _, callback) => {
 			const actionType = RequestUtil.getActionType(skillName, event)
 

@@ -1,22 +1,6 @@
 import { AWS } from "@serverless/typescript"
 
-import HandlerUtil from "@/Utils/HandlerUtil"
-
-import { SkillName } from "@/Protocols/SkillProtocol"
-
-import { skillConfig } from "@/Config/SkillConfig"
-
-let functions: Record<string, unknown> = {}
-
-Object.entries(skillConfig).forEach(([skillName, config]) => {
-  functions = {
-    ...functions,
-    ...HandlerUtil.getHandlerFunctionConfig({
-      skillName: skillName as SkillName,
-      ...config
-    })
-  }
-})
+import ServerlessUtil from "@/Utils/ServerlessUtil"
 
 const serverlessConfiguration: AWS = {
   service: "alexa-skills",
@@ -38,7 +22,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000"
     }
   },
-  functions,
+  functions: ServerlessUtil.functions,
   package: {
     individually: true
   },
