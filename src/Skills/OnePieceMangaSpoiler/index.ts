@@ -1,9 +1,12 @@
 import { Handler, HandlerProps } from "@/Protocols/HandlerProtocol"
 import { Response } from "@/Protocols/ResponseProtocol"
+import { SkillName } from "@/Protocols/SkillProtocol"
 
 import HandlerModule from "@/Modules/HandlerModule"
 
 class OnePieceMangaSpoilerHandler implements Handler {
+  skillName: SkillName = "OnePieceMangaSpoiler"
+
   async onExecution ({ response }: HandlerProps): Promise<Response> {
     return response.speak("Working as expected!").send()
   }
@@ -37,4 +40,4 @@ class OnePieceMangaSpoilerHandler implements Handler {
   }
 }
 
-export const main = HandlerModule.adapt("OnePieceMangaSpoiler", new OnePieceMangaSpoilerHandler())
+export const main = HandlerModule.adapt(new OnePieceMangaSpoilerHandler())

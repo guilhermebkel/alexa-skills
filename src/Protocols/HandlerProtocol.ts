@@ -43,6 +43,7 @@ export type HandlerProps = {
 export type HandlerAction = (props: HandlerProps) => Promise<Response>
 
 export interface Handler {
+	skillName: SkillName
 	onExecution: HandlerAction
 	onLaunch: HandlerAction
 	onHelp: HandlerAction

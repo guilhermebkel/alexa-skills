@@ -4,6 +4,7 @@
   "main": "serverless.ts",
   "scripts": {
     "dev": "serverless offline start",
+    "auth": "sls alexa auth",
     "test:one-piece-manga-spoiler": "sls invoke local -f OnePieceMangaSpoiler"
   },
   "engines": {

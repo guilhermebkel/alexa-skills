@@ -4,7 +4,6 @@ import {
 	HandlerAction,
 	HandlerProps
 } from "@/Protocols/HandlerProtocol"
-import { SkillName } from "@/Protocols/SkillProtocol"
 import { ActionType } from "@/Protocols/RequestProtocol"
 import { Response } from "@/Protocols/ResponseProtocol"
 
@@ -13,9 +12,9 @@ import RequestUtil from "@/Utils/RequestUtil"
 import { HandlerActionNotFoundError } from "@/Errors/HandlerActionNotFoundError"
 
 class HandlerModule {
-	adapt (skillName: SkillName, handler: Handler): HandlerFn {
+	adapt (handler: Handler): HandlerFn {
 		return async (event, _, callback) => {
-			const actionType = RequestUtil.getActionType(skillName, event)
+			const actionType = RequestUtil.getActionType(handler.skillName, event)
 
 			const actionMap: Record<ActionType, HandlerAction> = {
 				CancelAndStop: handler.onCancelAndStop,
