@@ -3,7 +3,7 @@ import { AwsAlexaEventToken } from "@serverless/typescript"
 import { SkillName } from "@/Protocols/SkillProtocol"
 import { Response } from "@/Protocols/ResponseProtocol"
 
-export type HandlerFn = (event: unknown, context: unknown, callback: (error: Error | null, response: Response) => void) => void
+export type HandlerFn = (event: unknown, context: unknown, callback: (error: Error | null, response: Response | null) => void) => void
 
 export type GetHandlerConfigInput = {
 	skillName: SkillName

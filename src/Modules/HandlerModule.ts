@@ -10,6 +10,8 @@ import { Response } from "@/Protocols/ResponseProtocol"
 
 import RequestUtil from "@/Utils/RequestUtil"
 
+import { HandlerActionNotFoundError } from "@/Errors/HandlerActionNotFoundError"
+
 class HandlerModule {
 	adapt (skillName: SkillName, handler: Handler): HandlerFn {
 		return async (event, _, callback) => {
@@ -27,10 +29,19 @@ class HandlerModule {
 			}
 
 			const action = actionMap[actionType]
-			const handlerProps = this.getHandlerProps()
 
-			const response: Response = await action.call(handler, handlerProps)
-			callback(null, response)
+			if (action) {
+				try {
+					const handlerProps = this.getHandlerProps()
+
+					const response: Response = await action.call(handler, handlerProps)
+					callback(null, response)
+				} catch (error) {
+					callback(error, null)
+				}
+			} else {
+				callback(new HandlerActionNotFoundError(), null)
+			}
 		}
 	}
 

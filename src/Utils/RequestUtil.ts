@@ -4,7 +4,11 @@ import { SkillName } from "@/Protocols/SkillProtocol"
 import * as Alexa from "ask-sdk-core"
 
 class RequestUtil {
-	getActionType (skillName: SkillName, event: any): ActionType {
+	getActionType (skillName: SkillName, event: any): ActionType | null {
+		if (!event) {
+			return null
+		}
+
 		const requestType = Alexa.getRequestType(event)
 		const intentName = Alexa.getIntentName(event)
 
@@ -22,6 +26,8 @@ class RequestUtil {
 			}
 
 			return intentMap[intentName] || "Error"
+		} else {
+			return null
 		}
 	}
 }

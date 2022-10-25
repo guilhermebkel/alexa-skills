@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "serverless.ts",
   "scripts": {
-    "dev": "serverless offline start"
+    "dev": "serverless offline start",
+    "test:one-piece-manga-spoiler": "sls invoke local -f OnePieceMangaSpoiler"
   },
   "engines": {
     "node": ">=14.15.0"
