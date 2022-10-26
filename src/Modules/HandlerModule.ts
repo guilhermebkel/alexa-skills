@@ -42,10 +42,8 @@ class HandlerModule {
 			},
 			{
 				canHandle: (props) => (
-					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" && (
-						Alexa.getIntentName(props.requestEnvelope) === "AMAZON.CancelIntent" ||
-						Alexa.getIntentName(props.requestEnvelope) === "AMAZON.StopIntent"
-					)
+					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
+					["AMAZON.CancelIntent", "AMAZON.StopIntent"].includes(Alexa.getIntentName(props.requestEnvelope))
 				),
 				handle: async (props) => await handler.onCancelAndStop(props)
 			},
