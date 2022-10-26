@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "serverless.ts",
   "scripts": {
-    "dev": "serverless offline start",
-    "auth": "sls alexa auth",
+    "dev": "sls offline start",
+    "config": "sls config credentials --provider aws --key key --secret secret",
+    "lambda:deploy": "sls deploy --verbose",
+    "alexa:auth": "sls alexa auth",
+    "alexa:update": "sls alexa update --verbose",
     "start:one-piece-manga-spoiler": "sls invoke local -f OnePieceMangaSpoiler",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",

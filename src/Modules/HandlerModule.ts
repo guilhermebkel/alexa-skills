@@ -29,7 +29,7 @@ class HandlerModule {
 			{
 				canHandle: (props) => (
 					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
-					Alexa.getIntentName(props.requestEnvelope) === `${handler.skillName}Intent`
+					Alexa.getIntentName(props.requestEnvelope) === handler.mainIntentName
 				),
 				handle: async (props) => await handler.onExecution(props)
 			},

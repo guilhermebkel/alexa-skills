@@ -1,10 +1,9 @@
 import { Handler, HandlerProps, HandlerResponse } from "@/Protocols/HandlerProtocol"
-import { SkillName } from "@/Protocols/SkillProtocol"
 
 import HandlerModule from "@/Modules/HandlerModule"
 
 class OnePieceMangaSpoilerHandler implements Handler {
-  skillName: SkillName = "OnePieceMangaSpoiler"
+  mainIntentName: string = "OnePieceMangaSpoilerIntent"
 
   async onExecution ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
     return responseBuilder.speak("Working as expected!").getResponse()

@@ -32,7 +32,8 @@ const serverlessConfiguration: AWS = {
 			define: { "require.resolve": undefined },
 			platform: "node",
 			concurrency: 10
-		}
+		},
+		...ServerlessUtil.custom
 	}
 }
 
