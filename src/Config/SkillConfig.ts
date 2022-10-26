@@ -13,7 +13,15 @@ export const skillConfig: SkillConfig[] = [
 		models: {
 			"pt-BR": {
 				invocationName: "qual o spoiler de one piece dessa semana",
-				customIntents: []
+				customIntents: [
+					{
+						name: "OnePieceMangaSpoilerIntent",
+						samples: [
+							"one piece spoiler",
+							"one piece manga spoiler"
+						]
+					}
+				]
 			}
 		}
 	}
