@@ -1,5 +1,4 @@
-import { Handler, HandlerProps } from "@/Protocols/HandlerProtocol"
-import { Response } from "@/Protocols/ResponseProtocol"
+import { Handler, HandlerProps, HandlerResponse } from "@/Protocols/HandlerProtocol"
 import { SkillName } from "@/Protocols/SkillProtocol"
 
 import HandlerModule from "@/Modules/HandlerModule"
@@ -7,36 +6,36 @@ import HandlerModule from "@/Modules/HandlerModule"
 class OnePieceMangaSpoilerHandler implements Handler {
   skillName: SkillName = "OnePieceMangaSpoiler"
 
-  async onExecution ({ response }: HandlerProps): Promise<Response> {
-    return response.speak("Working as expected!").send()
+  async onExecution ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+    return responseBuilder.speak("Working as expected!").getResponse()
   }
 
-	async onLaunch ({ response }: HandlerProps): Promise<Response> {
-    return response.speak("Launched!").send()
+	async onLaunch ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+    return responseBuilder.speak("Launched!").getResponse()
   }
 
-	async onHelp ({ response }: HandlerProps): Promise<Response> {
-    return response.speak("Need help?").send()
+	async onHelp ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+    return responseBuilder.speak("Need help?").getResponse()
   }
 
-	async onCancelAndStop ({ response }: HandlerProps): Promise<Response> {
-    return response.speak("Cancel and Stop!").send()
+	async onCancelAndStop ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+    return responseBuilder.speak("Cancel and Stop!").getResponse()
   }
 
-	async onFallback ({ response }: HandlerProps): Promise<Response> {
-    return response.speak("Fallbacked!").send()
+	async onFallback ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+    return responseBuilder.speak("Fallbacked!").getResponse()
   }
 
-	async onSessionEnded ({ response }: HandlerProps): Promise<Response> {
-    return response.speak("Ended session!").send()
+	async onSessionEnded ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+    return responseBuilder.speak("Ended session!").getResponse()
   }
 
-	async onIntentReflector ({ response }: HandlerProps): Promise<Response> {
-    return response.speak("Reflected intent!").send()
+	async onIntentReflector ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+    return responseBuilder.speak("Reflected intent!").getResponse()
   }
 
-	async onError ({ response }: HandlerProps): Promise<Response> {
-    return response.speak("Failed!").send()
+	async onError ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+    return responseBuilder.speak("Failed!").getResponse()
   }
 }
 

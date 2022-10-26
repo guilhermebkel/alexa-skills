@@ -1,85 +1,83 @@
-import { HandlerFn, Handler, HandlerAction, HandlerProps } from "@/Protocols/HandlerProtocol"
-import { ActionType } from "@/Protocols/RequestProtocol"
-import { Response } from "@/Protocols/ResponseProtocol"
+import * as Alexa from "ask-sdk-core"
+import { LambdaHandler, RequestHandler, ErrorHandler } from "ask-sdk-core"
 
-import RequestUtil from "@/Utils/RequestUtil"
-
-import { HandlerActionNotFoundError } from "@/Errors/HandlerActionNotFoundError"
+import { Handler } from "@/Protocols/HandlerProtocol"
 
 class HandlerModule {
-	adapt (handler: Handler): HandlerFn {
-		return async (event, _, callback) => {
-			const actionType = RequestUtil.getActionType(handler.skillName, event)
+	adapt (handler: Handler): LambdaHandler {
+		const alexaHandler = Alexa.SkillBuilders.custom()
 
-			const actionMap: Record<ActionType, HandlerAction> = {
-				CancelAndStop: handler.onCancelAndStop,
-				Error: handler.onError,
-				Execution: handler.onExecution,
-				Fallback: handler.onFallback,
-				Help: handler.onHelp,
-				IntentReflector: handler.onIntentReflector,
-				Launch: handler.onLaunch,
-				SessionEnded: handler.onSessionEnded
-			}
+		const adaptedRequestHandlers = this.adaptRequestHandlers(handler)
+		alexaHandler.addRequestHandlers(...adaptedRequestHandlers)
 
-			const action = actionMap[actionType]
+		const adaptedErrorHandlers = this.adaptErrorHandlers(handler)
+		alexaHandler.addErrorHandlers(...adaptedErrorHandlers)
 
-			if (action) {
-				try {
-					const handlerProps = this.getHandlerProps()
+		alexaHandler.withCustomUserAgent("guilhermebkel/alexa-skills")
 
-					const response: Response = await action.call(handler, handlerProps)
-					callback(null, response)
-				} catch (error) {
-					callback(error, null)
-				}
-			} else {
-				callback(new HandlerActionNotFoundError(), null)
-			}
-		}
+		return alexaHandler.lambda()
 	}
 
-	private getHandlerProps (): HandlerProps {
-		const responseObject: Response = {
-			version: "1.0",
-			response: {
-				shouldEndSession: true
-			}
-		}
-
-		const handlerProps: HandlerProps = {
-			response: {
-				speak: (text: string) => {
-					responseObject.response.outputSpeech = {
-						type: "PlainText",
-						text
-					}
-
-					return handlerProps.response
-				},
-				reprompt: (text: string) => {
-					responseObject.response.reprompt = {
-						outputSpeech: {
-							type: "PlainText",
-							text
-						}
-					}
-
-					return handlerProps.response
-				},
-				send: () => responseObject
+	private adaptRequestHandlers (handler: Handler): RequestHandler[] {
+		return [
+			{
+				canHandle: (props) => (
+					Alexa.getRequestType(props.requestEnvelope) === "LaunchRequest"
+				),
+				handle: async (props) => await handler.onLaunch(props)
 			},
-			session: {
-				persist: (data: Record<string, unknown>) => {
-					responseObject.sessionAttributes = {
-						...responseObject.sessionAttributes,
-						...data
-					}
-				}
+			{
+				canHandle: (props) => (
+					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
+					Alexa.getIntentName(props.requestEnvelope) === `${handler.skillName}Intent`
+				),
+				handle: async (props) => await handler.onExecution(props)
+			},
+			{
+				canHandle: (props) => (
+					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
+          Alexa.getIntentName(props.requestEnvelope) === "AMAZON.HelpIntent"
+				),
+				handle: async (props) => await handler.onHelp(props)
+			},
+			{
+				canHandle: (props) => (
+					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" && (
+						Alexa.getIntentName(props.requestEnvelope) === "AMAZON.CancelIntent" ||
+						Alexa.getIntentName(props.requestEnvelope) === "AMAZON.StopIntent"
+					)
+				),
+				handle: async (props) => await handler.onCancelAndStop(props)
+			},
+			{
+				canHandle: (props) => (
+					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
+					Alexa.getIntentName(props.requestEnvelope) === "AMAZON.FallbackIntent"
+				),
+				handle: async (props) => await handler.onFallback(props)
+			},
+			{
+				canHandle: (props) => (
+					Alexa.getRequestType(props.requestEnvelope) === "SessionEndedRequest"
+				),
+				handle: async (props) => await handler.onSessionEnded(props)
+			},
+			{
+				canHandle: (props) => (
+					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest"
+				),
+				handle: async (props) => await handler.onIntentReflector(props)
 			}
-		}
+		]
+	}
 
-		return handlerProps
+	private adaptErrorHandlers (handler: Handler): ErrorHandler[] {
+		return [
+			{
+				canHandle: () => true,
+				handle: async (props, error) => await handler.onError(props, error)
+			}
+		]
 	}
 }
 
