@@ -10,8 +10,6 @@ export type HandlerResponse = Response
 export type HandlerActionFn = (props: HandlerInput) => Promise<HandlerResponse>
 
 export interface Handler {
-	mainIntentName: string
-	onExecution: HandlerActionFn
 	onLaunch: HandlerActionFn
 	onHelp: HandlerActionFn
 	onCancelAndStop: HandlerActionFn

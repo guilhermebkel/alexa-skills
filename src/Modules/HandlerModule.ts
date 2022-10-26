@@ -29,13 +29,6 @@ class HandlerModule {
 			{
 				canHandle: (props) => (
 					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
-					Alexa.getIntentName(props.requestEnvelope) === handler.mainIntentName
-				),
-				handle: async (props) => await handler.onExecution(props)
-			},
-			{
-				canHandle: (props) => (
-					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
           Alexa.getIntentName(props.requestEnvelope) === "AMAZON.HelpIntent"
 				),
 				handle: async (props) => await handler.onHelp(props)

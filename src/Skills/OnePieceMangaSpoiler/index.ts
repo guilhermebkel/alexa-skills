@@ -3,12 +3,6 @@ import { Handler, HandlerProps, HandlerResponse } from "@/Protocols/HandlerProto
 import HandlerModule from "@/Modules/HandlerModule"
 
 class OnePieceMangaSpoilerHandler implements Handler {
-  mainIntentName: string = "OnePieceMangaSpoilerIntent"
-
-  async onExecution ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-    return responseBuilder.speak("Working as expected!").getResponse()
-  }
-
 	async onLaunch ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
     return responseBuilder.speak("Launched!").getResponse()
   }
