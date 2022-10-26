@@ -72,7 +72,7 @@ class ServerlessUtil {
 									name: "AMAZON.NavigateHomeIntent",
 									samples: []
 								},
-								...model.intents
+								...model.customIntents
 							]
 						}
 					}

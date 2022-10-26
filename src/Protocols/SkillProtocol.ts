@@ -9,7 +9,7 @@ export type SkillConfig = {
 	}>
 	models: Record<string, {
 		invocationName: string
-		intents: Array<{
+		customIntents: Array<{
 			name: string
 			samples: string[]
 		}>
