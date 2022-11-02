@@ -43,6 +43,14 @@ const mockSpoilerPageHTML = (title: string = "Spoiler"): string => `
 		<p>
 
 		<p>
+			<strong>Todas as imagens</strong>
+			<br />
+			<a href="https://onepieceex.net/wp-content/uploads/2022/10/001.jpg">
+				<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="1200" height="865" class="aligncenter size-full wp-image-112002 ewww_webp" sizes="(max-width: 1200px) 100vw, 1200px" data-src-img="https://onepieceex.net/wp-content/uploads/2022/10/001.jpg" data-src-webp="https://onepieceex.net/wp-content/uploads/2022/10/001.jpg.webp" data-srcset-webp="https://onepieceex.net/wp-content/uploads/2022/10/001.jpg.webp 1200w, https://onepieceex.net/wp-content/uploads/2022/10/001-300x216.jpg.webp 300w, https://onepieceex.net/wp-content/uploads/2022/10/001-1024x738.jpg.webp 1024w, https://onepieceex.net/wp-content/uploads/2022/10/001-768x554.jpg.webp 768w" data-srcset-img="https://onepieceex.net/wp-content/uploads/2022/10/001.jpg 1200w, https://onepieceex.net/wp-content/uploads/2022/10/001-300x216.jpg 300w, https://onepieceex.net/wp-content/uploads/2022/10/001-1024x738.jpg 1024w, https://onepieceex.net/wp-content/uploads/2022/10/001-768x554.jpg 768w" data-eio="j" /><noscript><img src="https://onepieceex.net/wp-content/uploads/2022/10/001.jpg" alt="" width="1200" height="865" class="aligncenter size-full wp-image-112002" srcset="https://onepieceex.net/wp-content/uploads/2022/10/001.jpg 1200w, https://onepieceex.net/wp-content/uploads/2022/10/001-300x216.jpg 300w, https://onepieceex.net/wp-content/uploads/2022/10/001-1024x738.jpg 1024w, https://onepieceex.net/wp-content/uploads/2022/10/001-768x554.jpg 768w" sizes="(max-width: 1200px) 100vw, 1200px" /></noscript>
+			</a>
+		</p>
+
+		<p>
 			<strong>Fim do Capítulo One Piece 1065</strong>
 		</p>
 	</article>
