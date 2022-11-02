@@ -1,10 +1,23 @@
 import { Handler, HandlerProps, HandlerResponse } from "@/Protocols/HandlerProtocol"
 
 import HandlerModule from "@/Modules/HandlerModule"
+import OpexModule from "@/Skills/OnePieceMangaSpoiler/Modules/OpexModule"
 
 class OnePieceMangaSpoilerHandler implements Handler {
 	async onLaunch ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-    return responseBuilder.speak("Launched!").getResponse()
+    const spoilerInfo = await OpexModule.lookup()
+
+    if (spoilerInfo.status === "available") {
+      return responseBuilder.speak("Temos spoiler essa semana!").getResponse()
+    }
+    
+    if (spoilerInfo.status === "manga-launched") {
+      return responseBuilder.speak("O mangá dessa semana já foi lançado!").getResponse()
+    }
+
+    if (spoilerInfo.status === "not-found") {
+      return responseBuilder.speak("Nenhum spoiler foi encontrado nessa semana :(").getResponse()
+    }
   }
 
 	async onHelp ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {

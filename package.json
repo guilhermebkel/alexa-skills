@@ -9,7 +9,7 @@
     "alexa:auth": "sls alexa auth",
     "alexa:update": "sls alexa update --verbose",
     "start:one-piece-manga-spoiler": "sls invoke local -f OnePieceMangaSpoiler",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
@@ -26,6 +26,7 @@
     "ask-sdk-core": "^2.12.1",
     "ask-sdk-model": "^1.39.0",
     "aws-sdk": "^2.1240.0",
+    "cheerio": "^1.0.0-rc.12",
     "serverless-alexa-skills": "^0.1.0",
     "serverless-offline": "^11.1.3"
   },
