@@ -36,7 +36,6 @@ class OpexService {
 		return {
 			status: this.getSpoilerInfoStatusBySpoilerPageHTML(html),
 			content: this.getSpoilerInfoContentBySpoilerPageHTML(html),
-			type: this.getSpoilerInfoTypeBySpoilerPageHTML(html),
 			date: this.getSpoilerInfoDateBySpoilerPageHTML(html)
 		}
 	}
@@ -56,19 +55,6 @@ class OpexService {
 		}
 	}
 
-	private getSpoilerInfoTypeBySpoilerPageHTML (html: string): SpoilerLookup["type"] {
-		const [titleElement] = CrawlerService.findElements({
-			html,
-			selector: "#post > header > div.info > h1"
-		})
-
-		const title = titleElement?.children?.[0]?.data || ""
-
-		if (title) {
-			return "short"
-		}
-	}
-
 	private getSpoilerInfoStatusBySpoilerPageHTML (html: string): SpoilerLookup["status"] {
 		const [titleElement] = CrawlerService.findElements({
 			html,
@@ -83,7 +69,7 @@ class OpexService {
 			return "available"
 		}
 
-		const isMangaTitle = title.startsWith("Manga")
+		const isMangaTitle = title.startsWith("Mangá")
 
 		if (isMangaTitle) {
 			return "manga-launched"
@@ -98,7 +84,7 @@ class OpexService {
 			selector: "article#post > p"
 		})
 
-		const contentParts: string[] = []
+		const contentParams: string[] = []
 
 		contentElements.forEach((contentElement) => {
 			contentElement?.children?.forEach(child => {
@@ -107,22 +93,22 @@ class OpexService {
 
 				if (isValidSpoilerContentText) {
 					const formattedSpoilerContentText = spoilerContentText.split("– ").pop()
-					contentParts.push(formattedSpoilerContentText)
+					contentParams.push(formattedSpoilerContentText)
 				}
 
 				const spoilerTitleText = child?.children?.[0]?.data
 				const isValidSpoilerTitle = child?.name === "strong"
 
 				if (isValidSpoilerTitle) {
-					contentParts.push(spoilerTitleText)
+					contentParams.push(spoilerTitleText)
 				}
 			})
 		})
 
-		const isThereAnyContent = contentParts?.length > 0
+		const isThereAnyContent = contentParams?.length > 0
 
 		if (isThereAnyContent) {
-			return contentParts.join("")
+			return contentParams.join(". ")
 		} else {
 			return null
 		}

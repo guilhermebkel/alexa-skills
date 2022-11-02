@@ -1,48 +1,48 @@
-import { Handler, HandlerProps, HandlerResponse } from "@/Protocols/HandlerProtocol"
+import { HandlerProps, HandlerResponse } from "@/Protocols/HandlerProtocol"
 
+import HandlerAdapterModule from "@/Modules/HandlerAdapterModule"
 import HandlerModule from "@/Modules/HandlerModule"
 import OpexModule from "@/Skills/OnePieceMangaSpoiler/Modules/OpexModule"
 
-class OnePieceMangaSpoilerHandler implements Handler {
+import DateUtil from "@/Skills/OnePieceMangaSpoiler/Utils/DateUtil"
+
+class OnePieceMangaSpoilerHandler extends HandlerModule {
+	customRequestHandlers: HandlerModule["customRequestHandlers"] = [
+		{
+			canHandle: HandlerAdapterModule.canHandleCustomIntent("OnePieceMangaSpoilerIntent"),
+			handle: async (props) => await this.onOnePieceMangaSpoilerIntent(props)
+		}
+	]
+
 	async onLaunch ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
 		const spoilerInfo = await OpexModule.lookup()
+		
+		const today = new Date()
+		const isSpoilerFromCurrentWeek = Boolean(spoilerInfo.date) && DateUtil.isSameWeek(today, spoilerInfo.date)
+		const wasSpoilerNotFound = spoilerInfo.status === "not-found"
+		const foundNoSpoilerForCurrentWeek = !isSpoilerFromCurrentWeek || wasSpoilerNotFound
+
+		if (foundNoSpoilerForCurrentWeek) {
+			const speakOutput = "Nenhum spoiler foi encontrado nessa semana"
+			return responseBuilder.speak(speakOutput).getResponse()
+		}
 
 		if (spoilerInfo.status === "available") {
-			return responseBuilder.speak("Temos spoiler essa semana!").getResponse()
+			const speakOutput = "Temos spoiler essa semana! Quer que eu te conte?"
+			return responseBuilder.speak(speakOutput).reprompt(speakOutput).getResponse()
 		}
 		
 		if (spoilerInfo.status === "manga-launched") {
-			return responseBuilder.speak("O mangá dessa semana já foi lançado!").getResponse()
-		}
-
-		if (spoilerInfo.status === "not-found") {
-			return responseBuilder.speak("Nenhum spoiler foi encontrado nessa semana :(").getResponse()
+			const speakOutput = "O mangá dessa semana já foi lançado! Quer que eu te conte o spoiler mesmo assim?"
+			return responseBuilder.speak(speakOutput).reprompt(speakOutput).getResponse()
 		}
 	}
 
-	async onHelp ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-		return responseBuilder.speak("Need help?").getResponse()
-	}
-
-	async onCancelAndStop ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-		return responseBuilder.speak("Cancel and Stop!").getResponse()
-	}
-
-	async onFallback ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-		return responseBuilder.speak("Fallbacked!").getResponse()
-	}
-
-	async onSessionEnded ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-		return responseBuilder.speak("Ended session!").getResponse()
-	}
-
-	async onIntentReflector ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-		return responseBuilder.speak("Reflected intent!").getResponse()
-	}
-
-	async onError ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-		return responseBuilder.speak("Failed!").getResponse()
+	async onOnePieceMangaSpoilerIntent ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+		const spoilerInfo = await OpexModule.lookup()
+		
+		return responseBuilder.speak(spoilerInfo.content).getResponse()
 	}
 }
 
-export const main = HandlerModule.adapt(new OnePieceMangaSpoilerHandler())
+export const main = HandlerAdapterModule.adapt(new OnePieceMangaSpoilerHandler())

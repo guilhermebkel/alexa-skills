@@ -1,5 +1,7 @@
 export type SkillName = "OnePieceMangaSpoiler"
 
+export type CustomIntentName = "OnePieceMangaSpoilerIntent"
+
 export type SkillConfig = {
 	name: SkillName
 	id: string
@@ -10,7 +12,7 @@ export type SkillConfig = {
 	models: Record<string, {
 		invocationName: string
 		customIntents: Array<{
-			name: string
+			name: CustomIntentName
 			samples: string[]
 		}>
 	}>

@@ -34,6 +34,30 @@ class DateUtil {
 
 		return date
 	}
+
+	/**
+	 * Source code:
+	 * - https://stackoverflow.com/a/27125580/3307678
+	 */
+	getDateWeekDay (date: Date): number {
+		const firstJanuary = new Date(date.getFullYear(), 0, 1)
+		const firstJanuaryWeekDay = firstJanuary.getDay()
+
+		const millisecondsDifference = date.getTime() - firstJanuary.getTime()
+		const weekDaysDifference = millisecondsDifference / 86400000
+		const totalWeekDays = weekDaysDifference + firstJanuaryWeekDay
+
+		const totalAmountOfDaysInWeek = 7
+
+		const dateWeekDay = totalWeekDays / totalAmountOfDaysInWeek
+		const formattedDateWeekDay = Math.ceil(dateWeekDay)
+
+		return formattedDateWeekDay
+	}
+
+	isSameWeek (dateA: Date, dateB: Date): boolean {
+		return this.getDateWeekDay(dateA) === this.getDateWeekDay(dateB)
+	}
 }
 
 export default new DateUtil()

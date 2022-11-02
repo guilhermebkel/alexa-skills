@@ -99,7 +99,7 @@ describe("OpexService", () => {
 		})
 
 		test("Should be manga launched if the manga is available", async () => {
-			const html = mockSpoilerPageHTML("Manga")
+			const html = mockSpoilerPageHTML("Mangá")
 
 			const spoilerInfo = OpexService.getSpoilerInfoBySpoilerPageHTML(html)
 
@@ -111,7 +111,6 @@ describe("OpexService", () => {
 
 			expect(spoilerInfo.status).toBe("not-found")
 			expect(spoilerInfo.content).toBeFalsy()
-			expect(spoilerInfo.type).toBeFalsy()
 			expect(spoilerInfo.date).toBeFalsy()
 		})
 	})

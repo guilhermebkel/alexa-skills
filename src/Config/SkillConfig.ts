@@ -17,8 +17,11 @@ export const skillConfig: SkillConfig[] = [
 					{
 						name: "OnePieceMangaSpoilerIntent",
 						samples: [
-							"one piece spoiler",
-							"one piece manga spoiler"
+							"aham",
+							"pode falar",
+							"qual o spoiler",
+							"sim",
+							"me conta"
 						]
 					}
 				]
