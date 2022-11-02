@@ -9,10 +9,10 @@
     "alexa:auth": "sls alexa auth",
     "alexa:update": "sls alexa update --verbose",
     "start:one-piece-manga-spoiler": "sls invoke local -f OnePieceMangaSpoiler",
-    "test": "jest --passWithNoTests --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
-    "test:unit": "npm test -- --watch -c jest-unit-config.js",
-    "test:integration": "npm test -- --watch -c jest-integration-config.js",
+    "test:unit": "npm run test:verbose -- --watch -c jest-unit-config.js",
+    "test:integration": "npm run test:verbose -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage"
   },

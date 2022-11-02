@@ -18,7 +18,7 @@ export type Element = {
 	}
 	type: "text"
 	data: string
-	name: "a" | "td"
+	name: "a" | "td" | "strong"
 	lastChild: Element
 	children: Element[]
 }

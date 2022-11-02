@@ -102,12 +102,20 @@ class OpexService {
 
 		contentElements.forEach((contentElement) => {
 			contentElement?.children?.forEach(child => {
-				const content = child?.data || ""
+				const spoilerContentText = child?.data || ""
+				const isValidSpoilerContentText = spoilerContentText.includes("– ")
 
-				const isValidSpoilerContent = content.startsWith("\n\t\t\t–")
+				if (isValidSpoilerContentText) {
+					const formattedSpoilerContentText = spoilerContentText.split("– ").pop()
+					contentParts.push(formattedSpoilerContentText)
+				}
 
-				if (isValidSpoilerContent) {
-					contentParts.push(content)
+				const spoilerTitle = child?.children?.[0]
+				const spoilerTitleText = spoilerTitle?.data
+				const isValidSpoilerTitle = child?.name === "strong"
+
+				if (isValidSpoilerTitle) {
+					contentParts.push(spoilerTitleText)
 				}
 			})
 		})
