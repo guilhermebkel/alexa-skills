@@ -110,8 +110,7 @@ class OpexService {
 					contentParts.push(formattedSpoilerContentText)
 				}
 
-				const spoilerTitle = child?.children?.[0]
-				const spoilerTitleText = spoilerTitle?.data
+				const spoilerTitleText = child?.children?.[0]?.data
 				const isValidSpoilerTitle = child?.name === "strong"
 
 				if (isValidSpoilerTitle) {
