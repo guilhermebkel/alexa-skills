@@ -43,6 +43,12 @@ class OnePieceMangaSpoilerHandler extends HandlerModule {
 		
 		return responseBuilder.speak(spoilerInfo.content).getResponse()
 	}
+
+	async onHelp ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+		const speakOutput = "Me pergunte se tenho notícia do chapéu de palha para saber mais sobre os spoilers do mangá de One Piece dessa semana."
+		
+		return responseBuilder.speak(speakOutput).reprompt(speakOutput).getResponse()
+	}
 }
 
 export const main = HandlerAdapterModule.adapt(new OnePieceMangaSpoilerHandler())
