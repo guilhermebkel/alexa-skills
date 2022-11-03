@@ -4,7 +4,7 @@ import {
 	FindElementsInput,
 	FindChildElementInput,
 	Element
-} from "@/Skills/OnePieceMangaSpoiler/Protocols/CrawlerProtocol"
+} from "@/Protocols/CrawlerProtocol"
 
 class CrawlerService {
 	findChildElement (input: FindChildElementInput): Element {

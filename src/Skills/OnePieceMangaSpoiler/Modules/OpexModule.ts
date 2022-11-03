@@ -1,7 +1,7 @@
 import { SpoilerLookup } from "@/Skills/OnePieceMangaSpoiler/Protocols/OpexProtocol"
 
 import OpexService from "@/Skills/OnePieceMangaSpoiler/Services/OpexService"
-import HttpService from "@/Skills/OnePieceMangaSpoiler/Services/HttpService"
+import HttpService from "@/Services/HttpService"
 
 class OpexModule {
 	async lookup (): Promise<SpoilerLookup> {

@@ -1,4 +1,4 @@
-import CrawlerService from "@/Skills/OnePieceMangaSpoiler/Services/CrawlerService"
+import CrawlerService from "@/Services/CrawlerService"
 
 import DateUtil from "@/Skills/OnePieceMangaSpoiler/Utils/DateUtil"
 

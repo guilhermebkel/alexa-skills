@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios"
 import { Readable } from "stream"
 
-import { HttpOptions } from "@/Skills/OnePieceMangaSpoiler/Protocols/HttpProtocol"
+import { HttpOptions } from "@/Protocols/HttpProtocol"
 
 class HttpService {
 	private readonly client: AxiosInstance

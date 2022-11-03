@@ -4,6 +4,7 @@
   "main": "serverless.ts",
   "scripts": {
     "dev": "sls offline start",
+    "build": "rm -rf lib && tsc",
     "config": "sls config credentials --provider aws --key key --secret secret",
     "lambda:deploy": "sls deploy --verbose",
     "alexa:auth": "sls alexa auth",
