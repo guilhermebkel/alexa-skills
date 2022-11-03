@@ -33,9 +33,6 @@ class ServerlessUtil {
 			const adaptedSkill: CustomSkillConfig = {
 				id: skill.id,
 				manifest: {
-					publishingInformation: {
-						locales: skill.locales
-					},
 					apis: {
 						custom: {
 							...(skill.lambdaId && {
@@ -46,38 +43,8 @@ class ServerlessUtil {
 						}
 					},
 					manifestVersion: "1.0"
-				},
-				models: {}
-			}
-
-			Object.entries(skill.models).forEach(([locale, model]) => {
-				adaptedSkill.models[locale] = {
-					interactionModel: {
-						languageModel: {
-							invocationName: model.invocationName,
-							intents: [
-								{
-									name: "AMAZON.CancelIntent",
-									samples: []
-								},
-								{
-									name: "AMAZON.HelpIntent",
-									samples: []
-								},
-								{
-									name: "AMAZON.StopIntent",
-									samples: []
-								},
-								{
-									name: "AMAZON.NavigateHomeIntent",
-									samples: []
-								},
-								...model.customIntents
-							]
-						}
-					}
 				}
-			})
+			}
 
 			custom.alexa.skills.push(adaptedSkill)
 		})

@@ -12,11 +12,6 @@ export type FnConfig = {
 export type CustomSkillConfig = {
 	id: string
 	manifest: {
-		publishingInformation: {
-			locales: Record<string, {
-				name: string
-			}>
-		}
 		apis: {
 			custom: {
 				endpoint?: {
@@ -26,17 +21,6 @@ export type CustomSkillConfig = {
 		}
 		manifestVersion: string
 	}
-	models: Record<string, {
-		interactionModel: {
-			languageModel: {
-				invocationName: string
-				intents: Array<{
-					name: string
-					samples: string[]
-				}>
-			}
-		}
-	}>
 }
 
 export type CustomConfig = {
