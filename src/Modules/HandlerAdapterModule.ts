@@ -2,7 +2,6 @@ import * as Alexa from "ask-sdk-core"
 import { LambdaHandler, RequestHandler, ErrorHandler } from "ask-sdk-core"
 
 import { Handler } from "@/Protocols/HandlerProtocol"
-import { CustomIntentName } from "@/Protocols/SkillProtocol"
 
 class HandlerAdapterModule {
 	adapt (handler: Handler): LambdaHandler {
@@ -21,7 +20,7 @@ class HandlerAdapterModule {
 		return alexaHandler.lambda()
 	}
 
-	canHandleCustomIntent (customIntentName: CustomIntentName): RequestHandler["canHandle"] {
+	canHandleCustomIntent (customIntentName: string): RequestHandler["canHandle"] {
 		return (props) => (
 			Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
 			Alexa.getIntentName(props.requestEnvelope) === customIntentName
