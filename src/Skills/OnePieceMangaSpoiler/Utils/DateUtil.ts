@@ -62,7 +62,7 @@ class DateUtil {
 	getTodayDate (): Date {
 		const today = new Date()
 
-		today.setUTCHours(3, 0, 0, 0)
+		today.setUTCHours(0, 0, 0, 0)
 
 		return today
 	}
