@@ -1,10 +1,10 @@
-import { SpoilerLookup } from "@/Skills/OnePieceMangaSpoiler/Protocols/OpexProtocol"
+import { SpoilerInfo } from "@/Skills/OnePieceMangaSpoiler/Protocols/OpexProtocol"
 
 import OpexService from "@/Skills/OnePieceMangaSpoiler/Services/OpexService"
 import HttpService from "@/Services/HttpService"
 
 class OpexModule {
-	async lookup (): Promise<SpoilerLookup> {
+	async getSpoilerInfo (): Promise<SpoilerInfo> {
 		const OPEX_WEBSITE_BASE_URL = "https://onepieceex.net"
 
 		const httpService = new HttpService({ baseURL: OPEX_WEBSITE_BASE_URL })

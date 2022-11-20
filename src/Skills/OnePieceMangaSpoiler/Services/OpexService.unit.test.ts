@@ -1,5 +1,7 @@
 import OpexService from "@/Skills/OnePieceMangaSpoiler/Services/OpexService"
 
+import SpoilerContentPhrasesConstant from "@/Skills/OnePieceMangaSpoiler/Constants/SpoilerContentPhrasesConstant"
+
 const mockLandingPageHTML = (): string => `
 	<article id="post-111968" class="post-111968 post type-post status-publish format-standard has-post-thumbnail sticky hentry category-destaque category-manga category-onepiece category-spoiler">
 		<div class="efeitinho animacao-04s"></div>
@@ -51,8 +53,18 @@ const mockSpoilerPageHTML = (title: string = "Spoiler"): string => `
 		</p>
 
 		<p>
+			<strong>SPOILERS COMPLETOS</strong>
+		</p>
+
+		<p>Vegapunk nasceu com um cérebro genial, mas também comeu &#8220;Nomi Nomi no Mi&#8221; (Vegapunk morde a própria língua tentando dizer o nome da Akuma no Mi). A fruta permite que o cérebro de Vegapunk armazene informações ilimitadas, mas seu cérebro também cresce com os dados absorvidos.</p>
+		<p>Vegapunk diz algo para Luffy.</p>
+
+		<p>
 			<strong>Fim do Capítulo One Piece 1065</strong>
 		</p>
+
+		<p>Cliquem para ler o último Mangá One Piece 1066 &#8211;> <a href="https://onepieceex.net/manga-1066/">aqui</a>.</p>
+		<p>E ouçam nosso podcast sobre o último Mangá 1066 abaixo enquanto não sai o mangá semanal:</p>
 	</article>
 `
 
@@ -112,6 +124,22 @@ describe("OpexService", () => {
 			expect(spoilerInfo.status).toBe("not-found")
 			expect(spoilerInfo.content).toBeFalsy()
 			expect(spoilerInfo.date).toBeFalsy()
+		})
+
+		test("Should not retrieve pictures information", async () => {
+			const html = mockSpoilerPageHTML()
+
+			const spoilerInfo = OpexService.getSpoilerInfoBySpoilerPageHTML(html)
+
+			expect(spoilerInfo.content).not.toContain(SpoilerContentPhrasesConstant.ALL_SPOILER_IMAGES)
+		})
+
+		test("Should not retrieve information after end of spoiler", async () => {
+			const html = mockSpoilerPageHTML()
+
+			const spoilerInfo = OpexService.getSpoilerInfoBySpoilerPageHTML(html)
+
+			expect(spoilerInfo.content).not.toContain("ouçam nosso podcast")
 		})
 	})
 })

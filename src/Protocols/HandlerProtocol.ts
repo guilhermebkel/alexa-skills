@@ -17,5 +17,6 @@ export interface Handler {
 	onFallback: HandlerActionFn
 	onSessionEnded: HandlerActionFn
 	onIntentReflector: HandlerActionFn
+	onNo: HandlerActionFn
 	onError: (props: HandlerInput, error: Error) => Promise<HandlerResponse>
 }

@@ -15,9 +15,9 @@ class OnePieceMangaSpoilerHandler extends HandlerModule {
 	]
 
 	async onLaunch ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-		const spoilerInfo = await OpexModule.lookup()
+		const spoilerInfo = await OpexModule.getSpoilerInfo()
 		
-		const today = new Date()
+		const today = DateUtil.getTodayDate()
 		const isSpoilerFromCurrentWeek = Boolean(spoilerInfo.date) && DateUtil.isSameWeek(today, spoilerInfo.date)
 		const wasSpoilerNotFound = spoilerInfo.status === "not-found"
 		const foundNoSpoilerForCurrentWeek = !isSpoilerFromCurrentWeek || wasSpoilerNotFound
@@ -39,15 +39,27 @@ class OnePieceMangaSpoilerHandler extends HandlerModule {
 	}
 
 	async onOnePieceMangaSpoilerIntent ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
-		const spoilerInfo = await OpexModule.lookup()
+		const spoilerInfo = await OpexModule.getSpoilerInfo()
 		
 		return responseBuilder.speak(spoilerInfo.content).getResponse()
+	}
+
+	async onNo ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+		const speakOutput = "Entendido, tenha uma ótima semana!"
+
+		return responseBuilder.speak(speakOutput).getResponse()
 	}
 
 	async onHelp ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
 		const speakOutput = "Me pergunte se tenho notícia do chapéu de palha para saber mais sobre os spoilers do mangá de One Piece dessa semana."
 		
 		return responseBuilder.speak(speakOutput).reprompt(speakOutput).getResponse()
+	}
+
+	async onCancelAndStop ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+		const speakOutput = "Obrigada por usar essa skill. Para ativá-la novamente, basta perguntar: 'Alexa, tem notícia do chapéu de palha?'"
+
+		return responseBuilder.speak(speakOutput).getResponse()
 	}
 }
 

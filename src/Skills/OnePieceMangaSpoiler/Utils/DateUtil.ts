@@ -58,6 +58,14 @@ class DateUtil {
 	isSameWeek (dateA: Date, dateB: Date): boolean {
 		return this.getDateWeekDay(dateA) === this.getDateWeekDay(dateB)
 	}
+
+	getTodayDate (): Date {
+		const today = new Date()
+
+		today.setUTCHours(3, 0, 0, 0)
+
+		return today
+	}
 }
 
 export default new DateUtil()

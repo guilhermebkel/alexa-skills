@@ -38,6 +38,13 @@ class HandlerAdapterModule {
 			{
 				canHandle: (props) => (
 					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
+          Alexa.getIntentName(props.requestEnvelope) === "AMAZON.NoIntent"
+				),
+				handle: async (props) => await handler.onNo(props)
+			},
+			{
+				canHandle: (props) => (
+					Alexa.getRequestType(props.requestEnvelope) === "IntentRequest" &&
           Alexa.getIntentName(props.requestEnvelope) === "AMAZON.HelpIntent"
 				),
 				handle: async (props) => await handler.onHelp(props)

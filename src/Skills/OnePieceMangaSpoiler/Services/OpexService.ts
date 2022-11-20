@@ -1,8 +1,11 @@
 import CrawlerService from "@/Services/CrawlerService"
 
 import DateUtil from "@/Skills/OnePieceMangaSpoiler/Utils/DateUtil"
+import SanitizationUtil from "@/Skills/OnePieceMangaSpoiler/Utils/SanitizationUtil"
 
-import { SpoilerLookup } from "@/Skills/OnePieceMangaSpoiler/Protocols/OpexProtocol"
+import SpoilerContentPhrasesConstant from "@/Skills/OnePieceMangaSpoiler/Constants/SpoilerContentPhrasesConstant"
+
+import { SpoilerInfo } from "@/Skills/OnePieceMangaSpoiler/Protocols/OpexProtocol"
 
 class OpexService {
 	getSpoilerPageUrlByLandingPageHTML (html: string): string | null {
@@ -32,7 +35,7 @@ class OpexService {
 		return spoilerPageUrl
 	}
 
-	getSpoilerInfoBySpoilerPageHTML (html: string): SpoilerLookup {
+	getSpoilerInfoBySpoilerPageHTML (html: string): SpoilerInfo {
 		return {
 			status: this.getSpoilerInfoStatusBySpoilerPageHTML(html),
 			content: this.getSpoilerInfoContentBySpoilerPageHTML(html),
@@ -55,7 +58,7 @@ class OpexService {
 		}
 	}
 
-	private getSpoilerInfoStatusBySpoilerPageHTML (html: string): SpoilerLookup["status"] {
+	private getSpoilerInfoStatusBySpoilerPageHTML (html: string): SpoilerInfo["status"] {
 		const [titleElement] = CrawlerService.findElements({
 			html,
 			selector: "#post > header > div.info > h1"
@@ -86,21 +89,32 @@ class OpexService {
 
 		const contentParams: string[] = []
 
+		let reachedEndOfSpoilerContent = false
+
+		const blackListedPhrases = [
+			SpoilerContentPhrasesConstant.ALL_SPOILER_IMAGES
+		]
+
 		contentElements.forEach((contentElement) => {
 			contentElement?.children?.forEach(child => {
-				const spoilerContentText = child?.data || ""
-				const isValidSpoilerContentText = spoilerContentText.includes("– ")
+				let spoilerContentText = child?.data || child?.children?.[0]?.data || ""
 
-				if (isValidSpoilerContentText) {
-					const formattedSpoilerContentText = spoilerContentText.split("– ").pop()
-					contentParams.push(formattedSpoilerContentText)
-				}
+				const isValidSpoilerContent = spoilerContentText.match(/[a-zA-Z]/g)
 
-				const spoilerTitleText = child?.children?.[0]?.data
-				const isValidSpoilerTitle = child?.name === "strong"
+				if (!reachedEndOfSpoilerContent && isValidSpoilerContent) {
+					const isBlackListedContent = blackListedPhrases.some(phrase => spoilerContentText.includes(phrase))
 
-				if (isValidSpoilerTitle) {
-					contentParams.push(spoilerTitleText)
+					if (isBlackListedContent) {
+						spoilerContentText = ""
+					}
+
+					if (spoilerContentText) {
+						const sanitizedSpoilerContentText = SanitizationUtil.sanitizeSpoilerContent(spoilerContentText)
+
+						contentParams.push(sanitizedSpoilerContentText)
+
+						reachedEndOfSpoilerContent = spoilerContentText.includes(SpoilerContentPhrasesConstant.REACHED_END_OF_SPOILER)
+					}
 				}
 			})
 		})

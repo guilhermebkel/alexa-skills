@@ -7,6 +7,10 @@ abstract class HandlerModule implements Handler {
 		return responseBuilder.getResponse()
 	}
 
+	async onNo ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
+		return responseBuilder.getResponse()
+	}
+
 	async onHelp ({ responseBuilder }: HandlerProps): Promise<HandlerResponse> {
 		return responseBuilder.getResponse()
 	}
