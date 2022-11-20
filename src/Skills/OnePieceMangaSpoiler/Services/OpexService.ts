@@ -90,6 +90,7 @@ class OpexService {
 		const contentParams: string[] = []
 
 		let reachedEndOfSpoilerContent = false
+		let reachedStartOfSpoilerContent = false
 
 		const blackListedPhrases = [
 			SpoilerContentPhrasesConstant.ALL_SPOILER_IMAGES
@@ -101,7 +102,13 @@ class OpexService {
 
 				const isValidSpoilerContent = spoilerContentText.match(/[a-zA-Z]/g)
 
-				if (!reachedEndOfSpoilerContent && isValidSpoilerContent) {
+				if (!reachedStartOfSpoilerContent) {
+					reachedStartOfSpoilerContent = spoilerContentText.includes(SpoilerContentPhrasesConstant.START_OF_SPOILER)
+				}
+
+				const canProcessSpoilerContent = !reachedEndOfSpoilerContent && isValidSpoilerContent && reachedStartOfSpoilerContent
+
+				if (canProcessSpoilerContent) {
 					const isBlackListedContent = blackListedPhrases.some(phrase => spoilerContentText.includes(phrase))
 
 					if (isBlackListedContent) {
@@ -112,9 +119,11 @@ class OpexService {
 						const sanitizedSpoilerContentText = SanitizationUtil.sanitizeSpoilerContent(spoilerContentText)
 
 						contentParams.push(sanitizedSpoilerContentText)
-
-						reachedEndOfSpoilerContent = spoilerContentText.includes(SpoilerContentPhrasesConstant.REACHED_END_OF_SPOILER)
 					}
+				}
+
+				if (!reachedEndOfSpoilerContent) {
+					reachedEndOfSpoilerContent = spoilerContentText.includes(SpoilerContentPhrasesConstant.END_OF_SPOILER)
 				}
 			})
 		})

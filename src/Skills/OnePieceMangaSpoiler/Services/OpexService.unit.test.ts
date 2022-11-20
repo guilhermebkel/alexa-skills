@@ -32,6 +32,8 @@ const mockSpoilerPageHTML = (title: string = "Spoiler"): string => `
 			<div class="bg" style="background-image: url('https://onepieceex.net/wp-content/uploads/2022/10/Pasted-4-7.jpg')"></div>
 		</header>
 
+		<p>Receba o Zap do Vega!!! #ONEPIECE1067<br /> E sigam o <a href="https://www.instagram.com/mister27opex/">Instagram do Mister 27</a>, o spoilador favorito da Opex, para serem avisados quando saírem os primeiros spoilers, mangás, episódios e notícias de One Piece!!!</p>
+
 		<p>
 			<strong>Capítulo 1065: Seis Vegapunk</strong>
 		</p>
@@ -134,11 +136,12 @@ describe("OpexService", () => {
 			expect(spoilerInfo.content).not.toContain(SpoilerContentPhrasesConstant.ALL_SPOILER_IMAGES)
 		})
 
-		test("Should not retrieve information after end of spoiler", async () => {
+		test("Should not retrieve information around spoiler content", async () => {
 			const html = mockSpoilerPageHTML()
 
 			const spoilerInfo = OpexService.getSpoilerInfoBySpoilerPageHTML(html)
 
+			expect(spoilerInfo.content).not.toContain("Receba o Zap do Vega")
 			expect(spoilerInfo.content).not.toContain("ouçam nosso podcast")
 		})
 	})
